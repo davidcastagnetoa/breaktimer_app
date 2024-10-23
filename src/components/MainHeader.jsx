@@ -9,16 +9,8 @@ export const MainHeader = () => {
 
   return (
     <Header gitHubLink="https://github.com/radix-ui/primitives">
-      <Link size="2" color="gray" href="/primitives/docs" highContrast={location.pathname.includes("/primitives/docs")}>
+      <Link size="2" href="/primitives/docs" highContrast={location.pathname.includes("/primitives/docs")}>
         Documentation
-      </Link>
-      <Link
-        size="2"
-        color="gray"
-        href="/primitives/case-studies"
-        highContrast={location.pathname.includes("/primitives/case-studies")}
-      >
-        Case studies
       </Link>
     </Header>
   );

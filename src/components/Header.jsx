@@ -2,7 +2,7 @@ import RadixStyles from "../Header.module.css";
 import React, { useEffect, useState } from "react";
 import { RemoveScroll } from "react-remove-scroll";
 import { classNames } from "../utils/classNames";
-import { RadixLogo, RadixLogoIcon } from "./RadixLogo";
+import { RadixLogo, RadixLogoIcon, WorkLogoIcon } from "./RadixLogo";
 import { useLocation } from "react-router-dom";
 import {
   AccessibleIcon,
@@ -77,20 +77,22 @@ export const Header = ({ children, gitHubLink, ghost }) => {
 
   return (
     <Theme asChild className="radix-themes-custom-fonts">
-      <div
+      <Box
+        as="div"
         data-scroll-state={scrollState}
         data-mobile-menu-open={mobileMenu.open}
         className={classNames(RadixStyles.HeaderRoot, ghost ? RadixStyles.ghost : "")}
       >
-        <div className={RadixStyles.HeaderInner}>
-          <div
+        <Box className={RadixStyles.HeaderInner}>
+          <Box
+            position="absolute"
+            height="inherit"
+            top="0"
+            left="0"
+            right="0"
             className={RemoveScroll.classNames.fullWidth}
             style={{
-              position: "absolute",
               height: "inherit",
-              top: 0,
-              left: 0,
-              right: 0,
             }}
           >
             {/* Mobile Screen */}
@@ -121,7 +123,7 @@ export const Header = ({ children, gitHubLink, ghost }) => {
               <RadixByWorkOSLogoLink />
             </Flex>
 
-            <div className={RadixStyles.HeaderProductLinksContainer}>
+            <Box as="div" className={RadixStyles.HeaderProductLinksContainer}>
               <HeaderProductLink href="/" active={location.pathname === "/" || location.pathname.startsWith("/themes")}>
                 Themes
               </HeaderProductLink>
@@ -134,7 +136,7 @@ export const Header = ({ children, gitHubLink, ghost }) => {
               <HeaderProductLink href="/colors" active={location.pathname.startsWith("/colors")}>
                 Colors
               </HeaderProductLink>
-            </div>
+            </Box>
 
             <Flex
               display={{ initial: "none", md: "flex" }}
@@ -148,13 +150,9 @@ export const Header = ({ children, gitHubLink, ghost }) => {
             >
               {children}
 
-              <Link size="2" color="gray" href="/blog" highContrast={location.pathname.includes("/blog")}>
-                Blog
-              </Link>
-
               {gitHubLink && (
                 <Tooltip className="radix-themes-custom-fonts" content="View GitHub">
-                  <IconButton asChild size="3" variant="ghost" color="gray">
+                  <IconButton asChild size="3" variant="ghost">
                     <a href={gitHubLink} target="_blank" aria-label="View GitHub">
                       <GitHubLogoIcon width="16" height="16" />
                     </a>
@@ -175,15 +173,14 @@ export const Header = ({ children, gitHubLink, ghost }) => {
               right="0"
               pr="4"
             >
-              <div className={RadixStyles.HeaderThemeToggleContainer}>
+              <Box as="div" className={RadixStyles.HeaderThemeToggleContainer}>
                 <ThemeToggle />
-              </div>
+              </Box>
 
               <Tooltip className="radix-themes-custom-fonts" content="Navigation">
                 <IconButton
                   size="3"
                   variant="ghost"
-                  color="gray"
                   data-state={mobileMenu.open ? "open" : "closed"}
                   onClick={() => mobileMenu.setOpen((open) => !open)}
                   className={RadixStyles.MobileMenuButton}
@@ -192,21 +189,21 @@ export const Header = ({ children, gitHubLink, ghost }) => {
                 </IconButton>
               </Tooltip>
             </Flex>
-          </div>
-        </div>
-      </div>
+          </Box>
+        </Box>
+      </Box>
     </Theme>
   );
 };
 
 const HeaderProductLink = ({ active, children, href = "", ...props }) => (
-  <Link href={href}>
-    {" "}
-    //!This is the error
-    <a data-state={active ? "active" : "inactive"} className={RadixStyles.HeaderProductLink} {...props}>
-      <span className={RadixStyles.HeaderProductLinkInner}>{children}</span>
-      <span className={RadixStyles.HeaderProductLinkInnerHidden}>{children}</span>
-    </a>
+  <Link href={href} data-state={active ? "active" : "inactive"} className={RadixStyles.HeaderProductLink} {...props}>
+    <Text as="span" className={RadixStyles.HeaderProductLinkInner}>
+      {children}
+    </Text>
+    <Text as="span" className={RadixStyles.HeaderProductLinkInnerHidden}>
+      {children}
+    </Text>
   </Link>
 );
 
@@ -220,21 +217,12 @@ const RadixByWorkOSLogoLink = () => (
       {/* </BoxLink> */}
     </Link>
 
-    <div
-      style={{
-        background: "currentcolor",
-        opacity: 0.15,
-        width: 1,
-        height: 24,
-      }}
-    />
+    <Separator orientation="vertical" size="2" />
 
-    {/* <BoxLink href="https://workos.com" target="_blank"> */}
-    <AccessibleIcon label="Made by WorkOS">
-      <svg width="85" height="24" viewBox="0 0 85 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
-        <path d="..." />
-      </svg>
-    </AccessibleIcon>
-    {/* </BoxLink> */}
+    <Link href="/">
+      <AccessibleIcon label="Made by WorkOS">
+        <WorkLogoIcon />
+      </AccessibleIcon>
+    </Link>
   </Flex>
 );

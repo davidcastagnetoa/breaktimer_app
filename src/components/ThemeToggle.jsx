@@ -31,7 +31,7 @@ export const ThemeToggle = ({ children, ...props }) => {
       `}</style>
 
       <Tooltip className="radix-themes-custom-fonts" content="Toggle theme">
-        <IconButton size="3" variant="ghost" color="gray" aria-label="Toggle theme" onClick={toggleTheme} {...props}>
+        <IconButton size="3" variant="ghost" aria-label="Toggle theme" onClick={toggleTheme} {...props}>
           <SunIcon width="16" height="16" style={{ display: "var(--theme-toggle-sun-icon-display)" }} />
           <MoonIcon width="16" height="16" style={{ display: "var(--theme-toggle-moon-icon-display)" }} />
         </IconButton>
